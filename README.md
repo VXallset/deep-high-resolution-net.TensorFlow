@@ -1,5 +1,5 @@
 # deep-high-resolution-net.TensorFlow
-An TensorFlow implementation of HRNet-32.The dataset used to train the model is the AI Challenger dataset. 
+A TensorFlow implementation of HRNet-32.The dataset used to train the model is the AI Challenger dataset. 
 
 Just for fun! A **famous actor** CXK in China and the keypoints estimated using the HRNet-32.
 <div align=middle><img src="./demo_img/cxk.jpg" width=192 height=256>   <img src="./demo_img/result.jpg"> </div>
