@@ -24,7 +24,7 @@ Please note that the structure of the HRNet is complicated. I trained the HRNet-
 - Make sure the dataset name, mode file name is corrected.
 - Run the test.py!
 
-The result images will be saved in the _test_img_ folder. It will also generate the distances.npy and the classes.npy file, which will be used to calculate the AP50 and AP75 in later. 
+The result images will be saved in the _test_img_ folder. It will also generate the distances.npy and the classes.npy file, which will be used to calculate the AP50 and AP75 later. 
 
 ### For Evaluating
 - Run the evaluate.py.
