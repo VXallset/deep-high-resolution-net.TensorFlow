@@ -45,7 +45,7 @@ epoch 3| <div align=middle><img src="./demo_img/epoch3_step200_i_1.jpg" ></div> 
 
 ### For Testing
 - The result of testing images will be saved into the _./test_img/_ floder.
-<div align=middle>src="./test_img/step11_i_0.jpg" > <img src="./test_img/step136_i_0.jpg" ></div>
+<div align=middle> <img src="./test_img/step11_i_0.jpg" > <img src="./test_img/step136_i_0.jpg" ></div>
 
 # For More
 Contact me: vxallset@outlook.com
