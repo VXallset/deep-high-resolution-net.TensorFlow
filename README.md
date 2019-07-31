@@ -7,8 +7,8 @@ Just for fun! A **famous actor** CXK in China and the keypoints estimated using 
 For more details, please refer to the  [paper](https://arxiv.org/abs/1902.09212) and the [dataset](https://challenger.ai/competition/keypoint).
 
 # Environment
-- python 3.6
-- TensorFlow 1.11
+- python 3.6 or higher
+- TensorFlow 1.11 or higher
 - PyCharm
 
 # How to Use
@@ -17,11 +17,11 @@ For more details, please refer to the  [paper](https://arxiv.org/abs/1902.09212)
 - Convert the images in the AI Challenger dataset (train_images folder) to TFRecords by running the dataset.py. Please make sure that the **dataset_root_path** you used in the **extract_people_from_dataset()** function is the path of the AI Challenger dataset you saved in the previous step.
 - Run the train.py!
 
-Please note that the structure of the HRNet is complicated. I trained the HRNet-32 network using 2 Nvidia Titan V graphics cards. As the limited of the graphics memory（16 GB）, the max batch size I used is 2, and it took around 30 hours to finish 1 epoch (189176 steps). The model files were not uploaded. Please email me if you need them.
+Please note that the structure of the HRNet is complicated. I trained the HRNet-32 network using 2 Nvidia Titan V graphics cards. As the limited of the graphics memory（16 GB）, the max batch size I used was 2, and it took around 30 hours to finish 1 epoch (189176 steps). The model files were not uploaded. Please email me if you need them.
 
 ### For Testing
 - Finish the 4 steps in the training.
-- Make sure the dataset name, mode file name is corrected.
+- Make sure the dataset name, mode file name are corrected.
 - Run the test.py!
 
 The result images will be saved in the _test_img_ folder. It will also generate the distances.npy and the classes.npy file, which will be used to calculate the AP50 and AP75 later. 
