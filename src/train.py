@@ -10,9 +10,9 @@ This file is used to train the HRNet-32 model.
 """
 import numpy as np
 import tensorflow as tf
-from src.hrnet import *
-from src import dataset
-from src.heatmap import *
+from hrnet import *
+import dataset
+from heatmap import *
 import time
 import os
 

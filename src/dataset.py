@@ -123,7 +123,8 @@ def extract_people_from_dataset(dataset_root_path='../../../dataset/ai_challenge
                 img = io.imread(img_filename)
 
                 for i in range(len(boxes)):
-                    # construct the name of a human in the dictionary, for example, the first one (when i = 0) is 'human1'
+                    # construct the name of a human in the dictionary,
+                    # for example, the first one (when i = 0) is 'human1'
                     human_name = 'human' + str(i+1)
 
                     kp = kps[human_name]
@@ -183,43 +184,12 @@ def decode_proto(proto):
     return image_name, image, keypoints_ver, keypoints_hor, keypoints_class
 
 
-def decode_proto1(proto):
-    features = tf.parse_single_example(proto,
-                                       features={
-                                           'image_name': tf.FixedLenFeature([], tf.int64),
-                                           'annotation_number': tf.FixedLenFeature([], tf.int64),
-                                           'image_raw': tf.FixedLenFeature([], tf.string),
-                                           'keypoints_ver': tf.FixedLenFeature([], tf.string),
-                                           'keypoints_hor': tf.FixedLenFeature([], tf.string),
-                                           'keypoints_class': tf.FixedLenFeature([], tf.string),
-                                       })
-
-    image_name = features['image_name']
-    annotation_number = features['annotation_number']
-    image_raw = tf.image.decode_image(features['image_raw'], dtype=np.uint8)
-    image = tf.reshape(image_raw, [256, 192, 3])
-
-    keypoints_ver = tf.decode_raw(features['keypoints_ver'], out_type=np.uint8)
-    keypoints_hor = tf.decode_raw(features['keypoints_hor'], out_type=np.uint8)
-    keypoints_class = tf.decode_raw(features['keypoints_class'], out_type=np.uint8)
-
-    return image_name, annotation_number, image, keypoints_ver, keypoints_hor, keypoints_class
-
-
 def decode_tfrecord(filename_queue):
     tfreader = tf.TFRecordReader()
     _, proto = tfreader.read(filename_queue)
     image_name, image, keypoints_ver, keypoints_hor, keypoints_class = decode_proto(proto)
 
     return image_name, image, keypoints_ver, keypoints_hor, keypoints_class
-
-
-def decode_tfrecord1(filename_queue):
-    tfreader = tf.TFRecordReader()
-    _, proto = tfreader.read(filename_queue)
-    image_name, annotation_number, image, keypoints_ver, keypoints_hor, keypoints_class = decode_proto1(proto)
-
-    return image_name, annotation_number, image, keypoints_ver, keypoints_hor, keypoints_class
 
 
 def input_batch(datasetname, batch_size, num_epochs):
@@ -264,7 +234,7 @@ def mytest():
             # while not coord.should_stop():
             for i in range(10):
                 img_name, img, point_ver, point_hor, point_class = sess.run([image_name, image, keypoints_ver,
-                                                                                      keypoints_hor, keypoints_class])
+                                                                             keypoints_hor, keypoints_class])
 
                 print(img_name, point_hor, point_ver, point_class)
 

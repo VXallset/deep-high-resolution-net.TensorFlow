@@ -10,7 +10,7 @@ This file is used to generate the heat map and other stuffs.
 """
 import numpy as np
 from skimage import io, draw
-from src.dataset import draw_lines_on_img
+from dataset import draw_lines_on_img
 
 
 def gaussian_kernel(kernel_length=3, sigma=1.):

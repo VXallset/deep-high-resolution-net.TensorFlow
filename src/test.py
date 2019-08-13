@@ -10,11 +10,21 @@ This file is used to test the model using the AI Challenger dataset.
 """
 import numpy as np
 import tensorflow as tf
-from src.hrnet import *
-from src import dataset
-from src.heatmap import *
+from hrnet import *
+import dataset
+from heatmap import *
 import time
 import os
+
+from functools import reduce
+from operator import mul
+
+def get_num_params():
+    num_params = 0
+    for variable in tf.trainable_variables():
+        shape = variable.get_shape()
+        num_params += reduce(mul, [dim.value for dim in shape], 1)
+    return num_params
 
 
 def main(device_option='/gpu:0'):
@@ -25,7 +35,7 @@ def main(device_option='/gpu:0'):
 
     root_path = os.getcwd()[:-3]
 
-    datasetname = os.path.join(root_path, 'dataset/test.tfrecords')
+    datasetname = os.path.join(root_path, 'dataset/train.tfrecords')
     model_folder = os.path.join(root_path, 'models/')
     modelfile = os.path.join(root_path, 'models/epoch2.ckpt-567528')
 
@@ -48,6 +58,7 @@ def main(device_option='/gpu:0'):
         with tf.device(device_option):
             sess.run(tf.global_variables_initializer())
             saver.restore(sess=sess, save_path=modelfile)
+            #print(get_num_params())
 
             writer = tf.summary.FileWriter('../log/', sess.graph)
             start_time = time.time()

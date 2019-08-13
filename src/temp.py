@@ -5,21 +5,21 @@ This file is used to test the model using the AI Challenger dataset.
 
 @ Date created: Jun 04, 2019
 
-@ Last modified: Jun 27, 2019
+@ Last modified: Apr 13, 2019
 
 """
 import numpy as np
 import tensorflow as tf
-from src.hrnet import *
-from src import dataset
-from src.heatmap import *
+from hrnet import *
+import dataset
+from heatmap import *
 import time
 import os
 from skimage import io
 from skimage.transform import resize
+import cv2
 
-
-def main(device_option='/gpu:0'):
+def main(use_GPU = True):
     batch_size = 1
     num_epochs = 10
     image_numbers = 378352
@@ -44,30 +44,45 @@ def main(device_option='/gpu:0'):
     loss = compute_loss(net_output=net_output, ground_truth=ground_truth)
 
     saver = tf.train.Saver()
-    # os.environ['CUDA_VISIBLE_DEVICES'] = ''
-    _img = io.imread('../demo_img/cxk.jpg')
-    _img = np.array(resize(_img, (256, 192, 3)) * 255, dtype=np.int)
-    _img = np.reshape(_img, [1, 256, 192, 3])
+    device = '/gpu:0'
+    if not use_GPU:
+        os.environ['CUDA_VISIBLE_DEVICES'] = ''
+        device = '/cpu:0'
+
+    video_capture = cv2.VideoCapture('./cxk.mp4')
+    fps = video_capture.get(cv2.CAP_PROP_FPS)
+    start_second = 0
+    start_frame = fps * start_second
+    video_capture.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
 
     with tf.Session() as sess:
-        with tf.device(device_option):
+        with tf.device(device):
             sess.run(tf.global_variables_initializer())
             saver.restore(sess=sess, save_path=modelfile)
 
-            start_time = time.time()
+
             try:
-                tnet_output = sess.run(net_output, feed_dict={input_images: _img})
+                framid = 0
+                while True:
+                    start_time = time.time()
+                    retval, img_data = video_capture.read()
+                    if not retval:
+                        break
+                    img_data = cv2.cvtColor(img_data, code=cv2.COLOR_BGR2RGB)
+                    _img = cv2.resize(img_data, (192, 256))
+                    _img = np.array([_img])
 
-                prediction = decode_output(tnet_output, threshold=0.001)
+                    tnet_output = sess.run(net_output, feed_dict={input_images: _img})
 
+                    #prediction = decode_output(tnet_output, threshold=0.001)
 
-                timgs = decode_pose(_img, tnet_output, threshold=0.001)
-                resultimg = timgs[0]/ 255.0
+                    timgs = decode_pose(_img, tnet_output, threshold=0.001)
+                    resultimg = timgs[0]/ 255.0
 
-
-                io.imsave('../demo_img/result.jpg', resultimg)
-                print('time = {}'.format(time.time() - start_time))
-                print('---------------------------------------------------------------------------------')
+                    io.imsave('../demo_img/frame_{}.jpg'.format(framid), resultimg)
+                    framid += 1
+                    print('time = {}'.format(time.time() - start_time))
+                    print('---------------------------------------------------------------------------------')
 
             except tf.errors.OutOfRangeError:
                 print('End testing...')
@@ -78,5 +93,4 @@ def main(device_option='/gpu:0'):
 
 
 if __name__ == '__main__':
-    main(device_option='/gpu:0')
-
+    main(use_GPU=True)

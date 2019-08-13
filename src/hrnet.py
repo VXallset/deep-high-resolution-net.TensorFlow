@@ -10,7 +10,7 @@ Learning for Human Pose Estimation" using TensorFlow.
 
 """
 import tensorflow as tf
-from src.utils import *
+from utils import *
 
 
 def stage1(input, name='stage1', is_training=True):
