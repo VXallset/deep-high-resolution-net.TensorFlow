@@ -17,7 +17,7 @@ For more details, please refer to the  [paper](https://arxiv.org/abs/1902.09212)
 - Convert the images in the AI Challenger dataset (train_images folder) to TFRecords by running the dataset.py. Please make sure that the **dataset_root_path** you used in the **extract_people_from_dataset()** function is the path of the AI Challenger dataset you saved in the previous step.
 - Run the train.py!
 
-Please note that the structure of the HRNet is complicated. I trained the HRNet-32 network using 2 Nvidia Titan V graphics cards. As the limited of the graphics memory（16 GB）, the max batch size I used was 2, and it took around 30 hours to finish 1 epoch (189176 steps). The model files were not uploaded. Please email me if you need them.
+Please note that the structure of the HRNet is complicated. I trained the HRNet-32 network using 2 Nvidia Titan V graphics cards. As the limited of the graphics memory（16 GB）, the max batch size I used was 2, and it took around 30 hours to finish 1 epoch (189176 steps). The model files were uploaded to Baidu Cloud. Please refer to issue #16 if you need them.
 
 ### For Testing
 - Finish the 4 steps in the training.
